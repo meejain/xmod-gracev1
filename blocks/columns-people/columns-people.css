@@ -1,0 +1,33 @@
+.columns-people > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-people img {
+  width: 100%;
+}
+
+.columns-people > div > div {
+  order: 1;
+}
+
+.columns-people > div > .columns-people-img-col {
+  order: 0;
+}
+
+.columns-people > div > .columns-people-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns-people > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .columns-people > div > div {
+    flex: 1;
+    order: unset;
+  }
+}
