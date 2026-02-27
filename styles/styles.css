@@ -412,9 +412,10 @@ main .section.highlight > .default-content-wrapper > p:not(.button-wrapper) {
   margin-bottom: var(--spacing-s);
 }
 
-/* primary button arrow */
+/* button arrow */
 a.button.primary::after,
-a.button.accent::after {
+a.button.accent::after,
+a.button.secondary::after {
   content: ' \203A';
   font-size: 1.2em;
 }
