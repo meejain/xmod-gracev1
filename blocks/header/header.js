@@ -34,9 +34,13 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 
 /* === Mobile slide-in-panel navigation === */
 
+function getNavLink(li) {
+  return li.querySelector(':scope > a') || li.querySelector(':scope > p > a');
+}
+
 function extractNavTree(ul) {
-  return [...ul.children].filter((li) => li.querySelector(':scope > a')).map((li) => {
-    const a = li.querySelector(':scope > a');
+  return [...ul.children].filter((li) => getNavLink(li)).map((li) => {
+    const a = getNavLink(li);
     const sub = li.querySelector(':scope > ul');
     return {
       label: a.textContent.trim(),
@@ -152,8 +156,9 @@ function buildMegamenuPanel(navDrop) {
   contentCol.className = 'megamenu-content';
 
   items.forEach((li, idx) => {
-    const link = li.querySelector(':scope > a');
+    const link = getNavLink(li);
     const deepContent = li.querySelector(':scope > ul');
+    if (!link) return;
 
     const catItem = document.createElement('div');
     catItem.className = 'megamenu-category-item';
@@ -177,7 +182,7 @@ function buildMegamenuPanel(navDrop) {
       let flatLinksGroup = null;
 
       groups.forEach((groupLi) => {
-        const groupLink = groupLi.querySelector(':scope > a');
+        const groupLink = getNavLink(groupLi);
         const groupSubList = groupLi.querySelector(':scope > ul');
 
         if (groupSubList) {
@@ -222,7 +227,7 @@ function buildMegamenuPanel(navDrop) {
             groupContainer.append(group);
           }
         } else if (groupLink) {
-          // Flat link without sub-groups — collect into a single flat links group
+          // Flat link without sub-groups - collect into a single flat links group
           if (!flatLinksGroup) {
             flatLinksGroup = document.createElement('div');
             flatLinksGroup.className = 'megamenu-group';
@@ -390,6 +395,34 @@ export default async function decorate(block) {
   const nav = document.createElement('nav');
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+
+  // Normalize DA structure: single div with everything -> 3 divs (brand, sections, tools)
+  if (nav.children.length === 1) {
+    const single = nav.children[0];
+    const brandDiv = document.createElement('div');
+    const sectionsDiv = document.createElement('div');
+    const toolsDiv = document.createElement('div');
+
+    const defaultWrapper = document.createElement('div');
+    defaultWrapper.className = 'default-content-wrapper';
+
+    let foundMainUl = false;
+    [...single.children].forEach((child) => {
+      if (child.tagName === 'P' && child.querySelector('picture, img')) {
+        brandDiv.append(child);
+      } else if (child.tagName === 'UL' && !foundMainUl) {
+        foundMainUl = true;
+        defaultWrapper.append(child);
+        sectionsDiv.append(defaultWrapper);
+      } else if (foundMainUl) {
+        toolsDiv.append(child);
+      }
+    });
+
+    if (brandDiv.hasChildNodes() || sectionsDiv.hasChildNodes() || toolsDiv.hasChildNodes()) {
+      single.replaceWith(brandDiv, sectionsDiv, toolsDiv);
+    }
+  }
 
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
