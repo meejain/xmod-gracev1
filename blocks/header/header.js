@@ -380,13 +380,30 @@ function buildSearchOverlay(nav) {
 
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const navPath = isLocal
+    ? '/content/nav'
+    : (navMeta ? new URL(navMeta, window.location).pathname : '/nav');
   const fragment = await loadFragment(navPath);
 
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+
+  if (fragment?.firstElementChild) {
+    while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  } else {
+    const brand = document.createElement('div');
+    brand.className = 'nav-brand';
+    const a = document.createElement('a');
+    a.href = '/';
+    const img = document.createElement('img');
+    img.src = '/content/images/grace-logo.png';
+    img.alt = 'Grace';
+    a.append(img);
+    brand.append(a);
+    nav.append(brand, document.createElement('div'), document.createElement('div'));
+  }
 
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
