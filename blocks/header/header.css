@@ -598,10 +598,11 @@ header .nav-search-suggestions-grid .chevron {
     flex: 1 1 auto;
     justify-content: flex-end;
     align-items: center;
+    align-self: stretch;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
-    align-self: unset;
+    align-self: stretch;
     flex-direction: row;
   }
 
@@ -617,21 +618,26 @@ header .nav-search-suggestions-grid .chevron {
 
   /* Show desktop content wrapper */
   header nav .nav-sections .default-content-wrapper {
-    display: block;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
   }
 
   header nav .nav-sections .default-content-wrapper > ul {
     display: flex;
     gap: 0;
     margin: 0;
-    align-items: center;
+    align-items: stretch;
     justify-content: flex-end;
+    height: 100%;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
     position: relative;
     white-space: nowrap;
     padding: 0 20px;
+    display: flex;
+    align-items: center;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-search-item {
