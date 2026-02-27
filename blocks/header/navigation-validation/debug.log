@@ -13071,3 +13071,73 @@
 [2026-02-27T07:49:12.914Z] (+20ms) ℹ️ [INFO] Stop check: mobile-animation-speed...
 [2026-02-27T07:49:12.916Z] (+22ms) ✅ [PASS] === ALL STOP CHECKS PASSED ===
 [2026-02-27T07:49:12.916Z] (+22ms) 🏁 [END] Hook decision: ALLOW — All checks passed (elapsed: 22ms)
+[2026-02-27T07:52:51.843Z] (+1ms) 🔵 [START] === STOP EVENT — Final validation gate ===
+{
+  "workspaceRoot": "/workspace"
+}
+[2026-02-27T07:52:51.849Z] (+7ms) ℹ️ [INFO] WORKFLOW PROGRESS:
+┌─── WORKFLOW PROGRESS DASHBOARD ─── [Phase: MOBILE] ───┐
+│
+│ ═══ DESKTOP ═══
+│ Milestones:
+│   ✅ session.json
+│   ✅ phase-1-row-detection.json
+│   ✅ phase-2-row-mapping.json
+│   ✅ header-appearance-mapping.json
+│   ✅ phase-3-megamenu.json
+│   ✅ megamenu-mapping.json
+│   ✅ phase-5-aggregate.json
+│   ✅ content/nav.plain.html
+│   ✅ header.css
+│   ✅ header.js
+│   ✅ row-elements-mapping.json
+│   ✅ migrated-row-elements-mapping.json
+│   ✅ row-elements-behavior-register.json
+│   ✅ migrated-megamenu-mapping.json
+│   ✅ migrated-structural-summary.json
+│ Scripts executed (evidence):
+│   ✅ validate-nav-content.js RAN
+│   ✅ compare-megamenu-behavior.js RAN
+│   ✅ compare-row-elements-behavior.js RAN
+│   ✅ compare-structural-schema.js RAN
+│   ✅ compare-header-appearance.js RAN
+│ Desktop Registers:
+│   📊 style-register: 12/12 validated, 0 pending, avg similarity=97%
+│   📊 schema-register: 5/5 validated, allValidated=true
+│   📊 megamenu-behavior-register: 117/117 passed, allValidated=true
+│   📊 row-elements-behavior-register: 9/9 passed, allValidated=true
+│   📊 header-appearance-register: allValidated=true
+│ Desktop critique reports: 12
+│
+│ ═══ MOBILE ═══
+│ Milestones:
+│   ✅ phase-4-mobile.json
+│   ✅ mobile/migrated-mobile-structural-summary.json
+│   ✅ mobile/mobile-schema-register.json
+│   ✅ mobile/mobile-heading-coverage.json
+│   ✅ mobile/mobile-behavior-register.json
+│   ✅ mobile/mobile-style-register.json
+│ Mobile Registers:
+│   📊 mobile-schema-register: 0/0 validated, allValidated=true
+│   📊 mobile-behavior-register: 13/13 passed, allValidated=true
+│   📊 mobile-style-register: 10/10 validated, avg similarity=96%
+│ Mobile critique reports: 10
+│
+└──────────────────────────────────────────────────────────┘
+[2026-02-27T07:52:51.851Z] (+9ms) ℹ️ [INFO] session.json found — running full validation gate
+[2026-02-27T07:52:51.851Z] (+9ms) ℹ️ [INFO] Stop check: nav location + content...
+[2026-02-27T07:52:51.853Z] (+11ms) ℹ️ [INFO] Stop check: missing-content-register...
+[2026-02-27T07:52:51.853Z] (+11ms) ℹ️ [INFO] Stop check: style-register...
+[2026-02-27T07:52:51.855Z] (+13ms) ℹ️ [INFO] Stop check: schema-register...
+[2026-02-27T07:52:51.856Z] (+14ms) ℹ️ [INFO] Stop check: megamenu-behavior-register...
+[2026-02-27T07:52:51.858Z] (+16ms) ℹ️ [INFO] Stop check: row-elements-behavior-register...
+[2026-02-27T07:52:51.859Z] (+17ms) ℹ️ [INFO] Stop check: panel-layout-measured-values...
+[2026-02-27T07:52:51.861Z] (+19ms) ℹ️ [INFO] Stop check: header-appearance (when mapping exists)...
+[2026-02-27T07:52:51.861Z] (+19ms) ℹ️ [INFO] Stop check: hamburger-animation...
+[2026-02-27T07:52:51.862Z] (+20ms) ℹ️ [INFO] Stop check: mobile-registers (schema + style)...
+[2026-02-27T07:52:51.863Z] (+21ms) ℹ️ [INFO] Stop check: mobile-critique-proof...
+[2026-02-27T07:52:51.865Z] (+23ms) ℹ️ [INFO] Stop check: mobile-missing-content-register...
+[2026-02-27T07:52:51.867Z] (+25ms) ℹ️ [INFO] Stop check: mobile-behavior-register...
+[2026-02-27T07:52:51.868Z] (+26ms) ℹ️ [INFO] Stop check: mobile-animation-speed...
+[2026-02-27T07:52:51.870Z] (+28ms) ✅ [PASS] === ALL STOP CHECKS PASSED ===
+[2026-02-27T07:52:51.870Z] (+28ms) 🏁 [END] Hook decision: ALLOW — All checks passed (elapsed: 28ms)
