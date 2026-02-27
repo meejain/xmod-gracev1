@@ -35,8 +35,8 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 /* === Mobile slide-in-panel navigation === */
 
 function extractNavTree(ul) {
-  return [...ul.children].filter((li) => li.querySelector(':scope > a')).map((li) => {
-    const a = li.querySelector(':scope > a');
+  return [...ul.children].filter((li) => li.querySelector(':scope > a, :scope > p > a')).map((li) => {
+    const a = li.querySelector(':scope > a, :scope > p > a');
     const sub = li.querySelector(':scope > ul');
     return {
       label: a.textContent.trim(),
@@ -152,7 +152,7 @@ function buildMegamenuPanel(navDrop) {
   contentCol.className = 'megamenu-content';
 
   items.forEach((li, idx) => {
-    const link = li.querySelector(':scope > a');
+    const link = li.querySelector(':scope > a, :scope > p > a');
     const deepContent = li.querySelector(':scope > ul');
 
     const catItem = document.createElement('div');
@@ -177,11 +177,11 @@ function buildMegamenuPanel(navDrop) {
       let flatLinksGroup = null;
 
       groups.forEach((groupLi) => {
-        const groupLink = groupLi.querySelector(':scope > a');
+        const groupLink = groupLi.querySelector(':scope > a, :scope > p > a');
         const groupSubList = groupLi.querySelector(':scope > ul');
 
         if (groupSubList) {
-          const promoImg = groupSubList.querySelector(':scope > li > img');
+          const promoImg = groupSubList.querySelector(':scope > li > img, :scope > li > p > picture img');
           if (promoImg) {
             promoBlock = document.createElement('div');
             promoBlock.className = 'megamenu-promo';
@@ -192,7 +192,8 @@ function buildMegamenuPanel(navDrop) {
             promoTitle.className = 'megamenu-promo-title';
             promoTitle.textContent = groupLink ? groupLink.textContent : '';
             promoLink.append(promoTitle);
-            const promoDesc = groupSubList.querySelector('p');
+            const descPs = [...groupSubList.querySelectorAll(':scope > li > p')];
+            const promoDesc = descPs.find((p) => !p.querySelector('picture, img'));
             if (promoDesc) {
               const desc = document.createElement('p');
               desc.className = 'megamenu-promo-desc';
@@ -380,7 +381,7 @@ function buildSearchOverlay(nav) {
 
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
   block.textContent = '';
