@@ -300,15 +300,34 @@ function buildSimpleDropdownPanel(navDrop) {
 
       // Remove the nested ul from the left column (keep only the parent link)
       nestedUl.remove();
-
-      // Add hover handler to show sub-items in right panel
-      li.addEventListener('mouseenter', () => {
-        leftCol.querySelectorAll('.has-sub-content').forEach((c) => c.classList.remove('active'));
-        li.classList.add('active');
-        rightCol.querySelectorAll('.dropdown-sub-pane').forEach((p) => p.classList.remove('active'));
-        pane.classList.add('active');
-      });
     }
+  });
+
+  // Set first item as active by default
+  const firstItem = subList.querySelector(':scope > li');
+  if (firstItem) firstItem.classList.add('active');
+
+  // If first item has sub-content, show its pane
+  const firstPane = rightCol.querySelector('.dropdown-sub-pane');
+  if (firstItem?.classList.contains('has-sub-content') && firstPane) {
+    firstPane.classList.add('active');
+  }
+
+  // Add hover handlers on ALL category items for active state management
+  items.forEach((li) => {
+    li.addEventListener('mouseenter', () => {
+      // Remove active from all items
+      subList.querySelectorAll(':scope > li').forEach((c) => c.classList.remove('active'));
+      li.classList.add('active');
+
+      // Show matching sub-pane if this item has sub-content
+      rightCol.querySelectorAll('.dropdown-sub-pane').forEach((p) => p.classList.remove('active'));
+      if (li.classList.contains('has-sub-content')) {
+        const idx2 = li.getAttribute('data-sub-index');
+        const pane2 = rightCol.querySelector(`.dropdown-sub-pane[data-index="${idx2}"]`);
+        if (pane2) pane2.classList.add('active');
+      }
+    });
   });
 
   leftCol.appendChild(subList);

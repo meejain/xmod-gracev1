@@ -655,6 +655,21 @@ header .nav-search-suggestions-grid .chevron {
     color: var(--accent-color-hover);
   }
 
+  /* === Triangle pointer for ALL dropdowns (simple + megamenu) === */
+  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #1e1e1e;
+    z-index: 21;
+  }
+
   /* === Simple Dropdown Panel (Products, Resources, People, About Grace) === */
   header nav .nav-sections .nav-drop > .dropdown-panel {
     display: none;
@@ -670,8 +685,9 @@ header .nav-search-suggestions-grid .chevron {
   }
 
   header nav .nav-sections .dropdown-panel-categories {
-    width: 373px;
-    min-width: 373px;
+    box-sizing: border-box;
+    width: 280px;
+    min-width: 280px;
     background: #e6e7e8;
     padding: 40px;
   }
@@ -684,10 +700,12 @@ header .nav-search-suggestions-grid .chevron {
 
   header nav .nav-sections .dropdown-panel-categories > ul > li {
     padding: 0;
+    margin-bottom: 15px;
     cursor: pointer;
+    position: relative;
   }
 
-  header nav .nav-sections .dropdown-panel-categories > ul > li > a {
+  header nav .nav-sections .dropdown-panel-categories > ul > li a {
     display: block;
     padding: 0 20px;
     font-family: var(--heading-font-family);
@@ -696,11 +714,58 @@ header .nav-search-suggestions-grid .chevron {
     color: var(--text-color);
     text-decoration: none;
     line-height: 23.8px;
+    position: relative;
   }
 
-  header nav .nav-sections .dropdown-panel-categories > ul > li:first-child > a,
-  header nav .nav-sections .dropdown-panel-categories > ul > li > a:hover {
+  header nav .nav-sections .dropdown-panel-categories > ul > li p {
+    margin: 0;
+  }
+
+  /* Active state — green text + arrow (default when nothing is hovered) */
+  header nav .nav-sections .dropdown-panel-categories > ul > li.active a {
     color: var(--accent-color-hover);
+  }
+
+  header nav .nav-sections .dropdown-panel-categories > ul > li.active::after {
+    content: '';
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #e6e7e8;
+    z-index: 1;
+  }
+
+  /* When hovering another item, suppress the active item's green text + arrow */
+  header nav .nav-sections .dropdown-panel-categories > ul:hover > li.active:not(:hover) a {
+    color: var(--text-color);
+  }
+
+  header nav .nav-sections .dropdown-panel-categories > ul:hover > li.active:not(:hover)::after {
+    content: none;
+  }
+
+  /* Hover state — green text + arrow follows the mouse via pure CSS */
+  header nav .nav-sections .dropdown-panel-categories > ul > li:hover a {
+    color: var(--accent-color-hover);
+  }
+
+  header nav .nav-sections .dropdown-panel-categories > ul > li:hover::after {
+    content: '';
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #e6e7e8;
+    z-index: 1;
   }
 
   header nav .nav-sections .dropdown-panel-content {
@@ -742,16 +807,7 @@ header .nav-search-suggestions-grid .chevron {
     color: var(--accent-color);
   }
 
-  /* Chevron indicator for items with sub-content */
-  header nav .nav-sections .dropdown-panel-categories .has-sub-content > a::after {
-    content: '▸';
-    margin-left: 8px;
-    font-size: 12px;
-  }
-
-  header nav .nav-sections .dropdown-panel-categories .has-sub-content.active > a {
-    color: var(--accent-color-hover);
-  }
+  /* has-sub-content active state handled by the general .active rule above */
 
   /* Hide old direct ul for nav-drop on desktop (now wrapped in panel) */
   header nav .nav-sections .nav-drop > ul {
@@ -779,25 +835,12 @@ header .nav-search-suggestions-grid .chevron {
     display: none !important;
   }
 
-  /* Triangle indicator for megamenu */
-  header nav .nav-sections .has-megamenu[aria-expanded='true']::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #e6e7e8;
-    z-index: 21;
-  }
+  /* Triangle indicator for megamenu is handled by the general .nav-drop rule above */
 
   /* Categories column */
   header .megamenu-categories {
-    width: 320px;
-    min-width: 320px;
+    width: 280px;
+    min-width: 280px;
     padding: 40px 0;
     background: #e6e7e8;
   }
@@ -911,37 +954,60 @@ header .nav-search-suggestions-grid .chevron {
 
   /* Promo block */
   header .megamenu-promo {
-    width: 240px;
-    min-width: 240px;
+    width: 280px;
+    min-width: 280px;
   }
 
   header nav .megamenu-promo a {
     display: block;
+    position: relative;
+    width: 280px;
+    height: 320px;
     text-decoration: none;
     color: #fff;
-    background: #333;
-    border-radius: 4px;
     overflow: hidden;
   }
 
+  /* Image fills the entire promo card as background */
   header .megamenu-promo img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
     display: block;
   }
 
+  /* Dark gradient overlay from top */
+  header nav .megamenu-promo a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0%) 100%);
+    z-index: 1;
+  }
+
   header .megamenu-promo-title {
-    padding: 12px 16px 4px;
+    position: relative;
+    z-index: 2;
+    padding: 30px 25px 0;
     font-family: var(--heading-font-family);
     font-size: 14px;
     font-weight: 700;
+    color: #fff;
+    line-height: 23.8px;
   }
 
   header .megamenu-promo-desc {
-    padding: 0 16px 16px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.4;
+    position: relative;
+    z-index: 2;
+    padding: 0 25px;
+    font-family: var(--heading-font-family);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 23.8px;
     color: #fff;
     margin: 0;
   }
