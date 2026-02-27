@@ -8,7 +8,7 @@
   },
   "desktopMapping": {
     "utilityLinks": [{ "label": "Vendors and Suppliers", "href": "/vendor-suppliers/" }],
-    "logo": { "src": "/content/images/grace-logo.png", "alt": "Grace Logo", "href": "/" },
+    "logo": { "src": "images/grace-logo.png", "alt": "Grace Logo", "href": "/" },
     "navItems": [
       { "label": "Industries", "href": "/industries/", "hasDropdown": true, "dropdownType": "megamenu" },
       { "label": "Products", "href": "/products/", "hasDropdown": true, "dropdownType": "simple" },
