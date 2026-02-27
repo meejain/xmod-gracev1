@@ -380,7 +380,10 @@ function buildSearchOverlay(nav) {
 
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const navPath = isLocal
+    ? '/content/nav'
+    : (navMeta ? new URL(navMeta, window.location).pathname : '/nav');
   const fragment = await loadFragment(navPath);
 
   block.textContent = '';
